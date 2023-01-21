@@ -90,7 +90,7 @@ client.on('message', async (message) => {
 
 });
 
-client.login("NjU4NzMwNzA4MjYwMzU2MDk2.GzzgXZ.tKKnmP1zlHYrW1v87cRpylMHxjATMPJbN4pPiA");
+client.login(process.env.token);
 
 const app = express()
 app.all('/', (req, res) => {
