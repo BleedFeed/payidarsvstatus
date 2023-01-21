@@ -1,7 +1,6 @@
  
 const { Client } = require('discord.js-selfbot-v13');
 const util = require('minecraft-server-util');
-const express = require('express')
 
 const options = {
     timeout: 1000 * 5, // timeout in milliseconds
@@ -91,10 +90,3 @@ client.on('message', async (message) => {
 });
 
 client.login(process.env.token);
-
-const app = express()
-app.all('/', (req, res) => {
-    console.log("Just got a request!")
-    res.send('Yo!')
-})
-app.listen(process.env.PORT || 3000)
