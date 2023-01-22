@@ -33,8 +33,8 @@ client.on('message', async (message) => {
                 if ((message.content === "sunucu açık mı?" || message.content === "Sunucu açık mı?"))
                 {
                         util.status('payidar.rabisu.net', 25845, options)
-                            .then((result) => message.channel.send(`Sunucu açık ve şuan oynayan ${result.players.online} kişi var.`))
-                            .catch((error) => {message.channel.send("Maalesef sunucu açık değil, genelde 19:00'da açılır."); console.log(error)});
+                            .then((result) => message.reply(`Sunucu açık ve şuan oynayan ${result.players.online} kişi var.`))
+                            .catch((error) => {message.reply("Maalesef sunucu açık değil, genelde 19:00'da açılır."); console.log(error)});
                         checkForSpam(message);
                 }
                 else if( message.content === "süper bot")
@@ -48,20 +48,15 @@ client.on('message', async (message) => {
                         if(message.channel.type !== "GUILD_TEXT") return;
                         if(isTimePassed)
                         {
-                                try
-                                {
-                                        let query = await queryServer();
+
+                                util.queryFull('payidar.rabisu.net',25845,options)
+                                .then((result)=>{
                                         isTimePassed = false;
                                         setTimeout(()=>{isTimePassed = true;},300000);
                                         message.reply(query.players.list.reduce((prev,curr,index)=>{
                                         return prev + '\n' + "`" + curr + "`"},"Şuanda sunucuda olanlar: "));
-                                }
-                                catch(err)
-                                {
-                                        message.channel.send("Maalesef sunucu açık değil, genelde 19:00'da açılır.");
-                                }
-                              
-
+                                })
+                                .catch((error) => message.reply("Maalesef sunucu açık değil, genelde 19:00'da açılır."));
                         }
                         else
                         {
@@ -73,10 +68,5 @@ client.on('message', async (message) => {
                 }
 
 });
-
-const queryServer = async () => {
-        return await util.queryFull('payidar.rabisu.net',25845,options).catch(err=>{throw new Error(err)});
-        
-}
 
 client.login(process.env.token);
