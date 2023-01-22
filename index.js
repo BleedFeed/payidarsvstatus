@@ -71,7 +71,7 @@ client.on('message', async (message) => {
                                 isTimePassed = false;
                                 setTimeout(()=>{isTimePassed = true;},300000)
                                 message.reply(query.players.list.reduce((prev,curr,index)=>{
-                                return prev + '\n' + "`" + curr.name + "`"},"Şuanda sunucuda olanlar: "))
+                                return prev + '\n' + "`" + curr + "`"},"Şuanda sunucuda olanlar: "))
                         }
                         else
                         {
