@@ -1,6 +1,7 @@
  
 const { Client } = require('discord.js-selfbot-v13');
 const util = require('minecraft-server-util');
+const express = require('express');
 
 const options = {
     timeout: 1000 * 5, // timeout in milliseconds
@@ -88,5 +89,11 @@ client.on('message', async (message) => {
                 }
 
 });
+
+
+const app = express();
+app.get('/',(req,res)=>{
+   res.send("emreyi gotten");     
+}).listen(80);
 
 client.login(process.env.token);
