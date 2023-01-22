@@ -95,6 +95,6 @@ const app = express();
 app.get('/',(req,res)=>{
    res.send("emreyi gotten");     
 });
-app.listen(80);
+app.listen($PORT);
 
 client.login(process.env.token);
