@@ -4,7 +4,7 @@ const util = require('minecraft-server-util');
 const express = require('express');
 
 const options = {
-    timeout: 1000 * 15, 
+    timeout: 1000 * process.env.requestTimeout, 
     enableSRV: true 
 };
 
