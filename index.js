@@ -19,8 +19,7 @@ var spammers = [];
 const checkForSpam = (message) => {
         if(!potentialSpammers[message.author.id])
         {
-                potentialSpammers[message.author.id] = {lastMessage:Date.now(),annen:1};
-                setTimeout(()=>{delete potentialSpammers[message.author.id]},process.env.spamResetTimeMS);
+                potentialSpammers[message.author.id] = {lastMessage:Date.now(),annen:0};
         }
         else
         {
