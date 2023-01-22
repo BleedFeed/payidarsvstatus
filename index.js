@@ -12,33 +12,14 @@ var isTimePassed = true;
 
 const client = new Client({});
 
-var potentialSpammers = {};
 
-var spammers = [];
+var cooldownList = [];
 
 const checkForSpam = (message) => {
-        if(!potentialSpammers[message.author.id])
+        if(cooldownList.indexOf(message.author.id) === -1)
         {
-                potentialSpammers[message.author.id] = {lastMessage:Date.now(),annen:0};
-        }
-        else
-        {
-                if(Date.now() - potentialSpammers[message.author.id].lastMessage <= process.env.spamTimerMS)
-                {
-                        potentialSpammers[message.author.id].annen = ++potentialSpammers[message.author.id].annen;
-                        if(potentialSpammers[message.author.id].annen == process.env.spamDetectedTime)
-                        {
-                                message.reply("Spam yapma" + message.author.toString())
-                                spammers.push(message.author.id);
-                                delete potentialSpammers[message.author.id];
-                                setTimeout(()=>{spammers.splice(spammers.indexOf(message.author.id,1))},process.env.spamBanTimeMS);
-
-                        }
-                }
-                if(typeof potentialSpammers[message.author.id] !== "undefined")
-                {
-                        potentialSpammers[message.author.id].lastMessage = Date.now();
-                }
+                cooldownList.push(message.author.id);
+                setTimeout(()=>{cooldownList.splice(cooldownList.indexOf(message.author.id),1)},process.env.cooldown);
         }
 }
 
@@ -48,7 +29,7 @@ client.on('ready', async () => {
 })
 
 client.on('message', async (message) => {
-                if(spammers.indexOf(message.author.id) !== -1){return true;}
+                if(cooldownList.indexOf(message.author.id) !== -1){return true;}
                 if ((message.content === "sunucu açık mı?" || message.content === "Sunucu açık mı?"))
                 {
                         util.status('payidar.rabisu.net', 25565, options)
