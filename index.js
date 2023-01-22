@@ -92,9 +92,13 @@ client.on('message', async (message) => {
 
 
 const app = express();
-app.get('/',(req,res)=>{
-   res.send("emreyi gotten");     
-});
-app.listen($PORT);
+const port = process.env.PORT || 3333;
 
+app.get('/', (req, res) => {
+  res.end("emoasdad");
+})
+
+app.listen(port, () => {
+  console.log(`sunucu acık port: ${port}`)
+})
 client.login(process.env.token);
