@@ -118,4 +118,5 @@ app.get('/', async (req, res) => {
 app.listen(port, () => {
   console.log(`sunucu acık port: ${port}`)
 })
+
 client.login(process.env.token);
