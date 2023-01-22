@@ -24,7 +24,7 @@ const checkForSpam = (message) => {
         }
         else
         {
-                if(Date.now() - potentialSpammers[message.author.id].lastMessage <= 2000)
+                if(Date.now() - potentialSpammers[message.author.id].lastMessage <= process.env.spamTimerMS)
                 {
                         potentialSpammers[message.author.id].annen = ++potentialSpammers[message.author.id].annen;
                         if(potentialSpammers[message.author.id].annen == process.env.spamDetectedTime)
