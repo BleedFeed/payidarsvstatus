@@ -65,7 +65,7 @@ client.on('message', async (message) => {
 
                 else if((message.content === "sunucuda kimler var?" || message.content === "Sunucuda kimler var?"))
                 {
-                        if(isTimePassed)
+                        if(isTimePassed && message.channel.type == "GUILD_TEXT")
                         {
                                 try
                                 {
