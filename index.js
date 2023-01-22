@@ -67,11 +67,20 @@ client.on('message', async (message) => {
                 {
                         if(isTimePassed)
                         {
-                                let query = await queryServer().catch(err => {message.channel.send("Maalesef sunucu açık değil, genelde 19:00'da açılır."); return;});
-                                isTimePassed = false;
-                                setTimeout(()=>{isTimePassed = true;},300000)
-                                message.reply(query.players.list.reduce((prev,curr,index)=>{
-                                return prev + '\n' + "`" + curr + "`"},"Şuanda sunucuda olanlar: "))
+                                try
+                                {
+                                        let query = await queryServer();
+                                        isTimePassed = false;
+                                        setTimeout(()=>{isTimePassed = true;},300000);
+                                        message.reply(query.players.list.reduce((prev,curr,index)=>{
+                                        return prev + '\n' + "`" + curr + "`"},"Şuanda sunucuda olanlar: "));
+                                }
+                                catch(err)
+                                {
+                                        message.channel.send("Maalesef sunucu açık değil, genelde 19:00'da açılır.");
+                                }
+                              
+
                         }
                         else
                         {
@@ -85,7 +94,7 @@ client.on('message', async (message) => {
 });
 
 const queryServer = async () => {
-        return await util.queryFull('payidar.rabDSASDisu.net',25845,options).catch(err=>{throw new Error(err)});
+        return await util.queryFull('payidar.rabisu.net',25845,options).catch(err=>{throw new Error(err)});
         
 }
 
