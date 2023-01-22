@@ -95,7 +95,7 @@ const port = process.env.PORT || 3333;
 
 app.get('/', async (req, res) => {
   res.setHeader("Content-Type","application/json");
-  res.end(JSON.stringify(await queryServer().catch(err => {console.log(err); res.end(JSON.stringify(err));})));
+  res.end(JSON.stringify(await queryServer().catch(err => {res.end(JSON.stringify({error:err.message}));})));
 })
 
 app.listen(port, () => {
