@@ -29,7 +29,7 @@ const checkForSpam = (message) => {
                         potentialSpammers[message.author.id].annen = ++potentialSpammers[message.author.id].annen;
                         if(potentialSpammers[message.author.id].annen == process.env.spamDetectedTime)
                         {
-                                message.reply("Spam yapma lan")
+                                message.reply("Spam yapma")
                                 spammers.push(message.author.id);
                                 delete potentialSpammers[message.author.id];
                                 setTimeout(()=>{spammers.splice(spammers.indexOf(message.author.id,1))},3600000);
