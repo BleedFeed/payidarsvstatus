@@ -5,8 +5,8 @@ const express = require('express');
 
 const options = {
     timeout: 1000 * process.env.requestTimeout, 
-    enableSRV: true 
-};
+    enableSRV: false
+}
 
 var isTimePassed = true;
 
