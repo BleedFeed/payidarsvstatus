@@ -85,7 +85,7 @@ client.on('message', async (message) => {
 });
 
 const queryServer = async () => {
-        return await util.queryFull('payidar.rabisu.net',25845,options).catch(err=>{throw new Error(err)});
+        return await util.queryFull('payidar.rabDSASDisu.net',25845,options).catch(err=>{throw new Error(err)});
         
 }
 
