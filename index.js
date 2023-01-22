@@ -28,7 +28,7 @@ const checkForSpam = (message) => {
                         potentialSpammers[message.author.id].annen = ++potentialSpammers[message.author.id].annen;
                         if(potentialSpammers[message.author.id].annen == process.env.spamDetectedTime)
                         {
-                                message.reply("Spam yapma")
+                                message.reply("Spam yapma" + message.author.toString())
                                 spammers.push(message.author.id);
                                 delete potentialSpammers[message.author.id];
                                 setTimeout(()=>{spammers.splice(spammers.indexOf(message.author.id,1))},process.env.spamBanTimeMS);
