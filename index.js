@@ -20,14 +20,14 @@ const checkForSpam = (message) => {
         if(!potentialSpammers[message.author.id])
         {
                 potentialSpammers[message.author.id] = {lastMessage:Date.now(),annen:1};
-                setTimeout(()=>{delete potentialSpammers[message.author.id]},30000);
+                setTimeout(()=>{delete potentialSpammers[message.author.id]},process.env.spamResetTimeMS);
         }
         else
         {
                 if(Date.now() - potentialSpammers[message.author.id].lastMessage <= 2000)
                 {
                         potentialSpammers[message.author.id].annen = ++potentialSpammers[message.author.id].annen;
-                        if(potentialSpammers[message.author.id].annen == 5)
+                        if(potentialSpammers[message.author.id].annen == process.env.spamDetectedTime)
                         {
                                 message.reply("Spam yapma lan")
                                 spammers.push(message.author.id);
