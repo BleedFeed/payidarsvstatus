@@ -1,10 +1,10 @@
  
 const { Client } = require('discord.js-selfbot-v13');
 const util = require('minecraft-server-util');
-const express = require('express');
+require('dotenv').config();
 
 const options = {
-    timeout: 1000 * process.env.requestTimeout, 
+    timeout: 1000 * process.env.requestTimeoutSeconds, 
     enableSRV: false
 }
 
@@ -19,7 +19,7 @@ const checkForSpam = (message) => {
         if(cooldownList.indexOf(message.author.id) === -1)
         {
                 cooldownList.push(message.author.id);
-                setTimeout(()=>{cooldownList.splice(cooldownList.indexOf(message.author.id),1)},process.env.cooldown);
+                setTimeout(()=>{cooldownList.splice(cooldownList.indexOf(message.author.id),1)},process.env.cooldownSeconds * 1000);
         }
 }
 
@@ -32,9 +32,9 @@ client.on('message', async (message) => {
                 if(cooldownList.indexOf(message.author.id) !== -1){return true;}
                 if ((message.content === "sunucu açık mı?" || message.content === "Sunucu açık mı?"))
                 {
-                        util.status('payidar.rabisu.net', 25565, options)
+                        util.status('payidar.rabisu.net', 25845, options)
                             .then((result) => message.channel.send(`Sunucu açık ve şuan oynayan ${result.players.online} kişi var.`))
-                            .catch((error) => message.channel.send("Maalesef sunucu açık değil, genelde 19:00'da açılır."));
+                            .catch((error) => {message.channel.send("Maalesef sunucu açık değil, genelde 19:00'da açılır."); console.log(error)});
                         checkForSpam(message);
                 }
                 else if( message.content === "süper bot")
@@ -78,27 +78,5 @@ const queryServer = async () => {
         return await util.queryFull('payidar.rabisu.net',25845,options).catch(err=>{throw new Error(err)});
         
 }
-
-
-const app = express();
-const port = process.env.PORT || 3333;
-
-app.get('/', async (req, res) => {
-  res.setHeader("Access-Control-Allow-Origin","*");
-  res.setHeader("Content-Type","application/json");
-  try
-  {
-        res.end(JSON.stringify(await queryServer()));
-  }
-  catch(err)
-  {
-        res.end(JSON.stringify({error:err.message}));
-  }
-
-})
-
-app.listen(port, () => {
-  console.log(`sunucu acık port: ${port}`)
-})
 
 client.login(process.env.token);
