@@ -94,6 +94,7 @@ client.on('message', async (message) => {
 const app = express();
 app.get('/',(req,res)=>{
    res.send("emreyi gotten");     
-}).listen(80);
+});
+app.listen(80);
 
 client.login(process.env.token);
