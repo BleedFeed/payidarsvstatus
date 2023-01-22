@@ -32,7 +32,7 @@ const checkForSpam = (message) => {
                                 message.reply("Spam yapma")
                                 spammers.push(message.author.id);
                                 delete potentialSpammers[message.author.id];
-                                setTimeout(()=>{spammers.splice(spammers.indexOf(message.author.id,1))},3600000);
+                                setTimeout(()=>{spammers.splice(spammers.indexOf(message.author.id,1))},process.env.spamBanTimeMS);
 
                         }
                 }
