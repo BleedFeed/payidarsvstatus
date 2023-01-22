@@ -95,7 +95,8 @@ const app = express();
 const port = process.env.PORT || 3333;
 
 app.get('/', (req, res) => {
-  res.end("emoasdad");
+  res.setHeader("Content-Type","application/json");
+  res.end(JSON.stringify({"emoyu":"gotten"}));
 })
 
 app.listen(port, () => {
