@@ -84,6 +84,7 @@ const app = express();
 const port = process.env.PORT || 3333;
 
 app.get('/', async (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin","*");
   res.setHeader("Content-Type","application/json");
   try
   {
