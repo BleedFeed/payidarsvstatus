@@ -4,17 +4,13 @@ const util = require('minecraft-server-util');
 const express = require('express');
 
 const options = {
-    timeout: 1000 * 5, // timeout in milliseconds
-    enableSRV: true // SRV record lookup
+    timeout: 1000 * 5, 
+    enableSRV: true 
 };
 
 var isTimePassed = true;
 
-const client = new Client({
-	// See other options here
-	// https://discordjs-self-v13.netlify.app/#/docs/docs/main/typedef/ClientOptions
-	// All partials are loaded automatically
-});
+const client = new Client({});
 
 var potentialSpammers = {};
 
@@ -71,13 +67,11 @@ client.on('message', async (message) => {
                 {
                         if(isTimePassed)
                         {
-                                util.status('payidar.rabisu.net', 25565, options)
-                                .then((result) =>{
-                                        isTimePassed = false;
-                                        setTimeout(()=>{isTimePassed = true;},300000)
-                                        message.reply(result.players.sample.reduce((prev,curr,index)=>{
-                                        return prev + '\n' + "`" + curr.name + "`"},"Şuanda sunucuda olanlar: "))}
-                                ).catch((error) => message.channel.send("Maalesef sunucu açık değil, genelde 19:00'da açılır."));
+                                let query = await queryServer().catch(err => {message.channel.send("Maalesef sunucu açık değil, genelde 19:00'da açılır."); return;});
+                                isTimePassed = false;
+                                setTimeout(()=>{isTimePassed = true;},300000)
+                                message.reply(query.players.list.reduce((prev,curr,index)=>{
+                                return prev + '\n' + "`" + curr.name + "`"},"Şuanda sunucuda olanlar: "))
                         }
                         else
                         {
@@ -90,13 +84,18 @@ client.on('message', async (message) => {
 
 });
 
+const queryServer = async () => {
+        return await util.queryFull('payidar.rabisu.net',25845,options).catch(err=>{throw new Error(err)});
+        
+}
+
 
 const app = express();
 const port = process.env.PORT || 3333;
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
   res.setHeader("Content-Type","application/json");
-  res.end(JSON.stringify({"emoyu":"gotten"}));
+  res.end(JSON.stringify(await queryServer()));
 })
 
 app.listen(port, () => {
