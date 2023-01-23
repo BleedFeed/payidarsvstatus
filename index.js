@@ -53,6 +53,7 @@ client.on('message', async (message) => {
                                 .then((result)=>{
                                         isTimePassed = false;
                                         setTimeout(()=>{isTimePassed = true;},300000);
+                                        if(result.players.online === 0){message.reply("Sunucu açık ama şuanda sunucuda kimse yok."); return;}
                                         message.reply(result.players.list.reduce((prev,curr)=>{
                                         return prev + '\n' + "`" + curr + "`"},"Şuanda sunucuda olanlar: "));
                                 })
