@@ -56,7 +56,7 @@ client.on('message', async (message) => {
                                         message.reply(query.players.list.reduce((prev,curr,index)=>{
                                         return prev + '\n' + "`" + curr + "`"},"Şuanda sunucuda olanlar: "));
                                 })
-                                .catch((error) => message.reply("Maalesef sunucu açık değil, genelde 19:00'da açılır."));
+                                .catch((error) => {message.reply("Maalesef sunucu açık değil, genelde 19:00'da açılır."); console.error(error);});
                         }
                         else
                         {
