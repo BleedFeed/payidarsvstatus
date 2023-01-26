@@ -50,7 +50,7 @@ client.on('ready', async () => {
                                 return;}
 
                         if(message.type === 'init') {
-                                if(typeof message.name !== "string" || message.name){
+                                if(typeof message.name !== "string" || !message.name){
                                         ws.send("invalid name");
                                         ws.close();  
                                         return;
