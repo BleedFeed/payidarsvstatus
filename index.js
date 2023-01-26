@@ -38,6 +38,7 @@ client.on('ready', async () => {
                 ws.on('message',async (data)=> {
                         let message = dataToJSON(data);
                         if(message instanceof Error) {
+                                console.log(Error.message);
                                 ws.send(Error.message);
                                 ws.close();
                                 return;
@@ -57,8 +58,11 @@ client.on('ready', async () => {
                 });
 
                 ws.on('close',()=>{
-                        if(!channel.deleted){channel.delete()}
-                        delete websocketChannels[channel.id];
+                        if(channel){
+                                if(!channel.deleted){channel.delete()}
+                                delete websocketChannels[channel.id];
+                        }
+
                 })
         });
 
