@@ -37,6 +37,11 @@ client.on('ready', async () => {
 
                 ws.on('message',async (data)=> {
                         let message = dataToJSON(data);
+                        if(message instanceof Error) {
+                                ws.send(Error.message);
+                                ws.close();
+                                return;
+                        }
                         if(typeof message.type !== 'string'|| typeof message.message !== 'string') {return;}
                         if(message.type === 'init' && typeof message.name === "string"){
                                    
@@ -65,7 +70,7 @@ function dataToJSON(data){
                 return JSON.parse(data.toString());
         }
         catch(err){
-                console.error("not a valid json");
+                return new Error("not a valid json");
         }
 }
 
