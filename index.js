@@ -38,8 +38,8 @@ client.on('ready', async () => {
                 ws.on('message',async (data)=> {
                         let message = dataToJSON(data);
                         if(message instanceof Error) {
-                                console.log(Error.message);
-                                ws.send(Error.message);
+                                console.log(message.message);
+                                ws.send(message.message);
                                 ws.close();
                                 return;
                         }
