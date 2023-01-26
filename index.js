@@ -27,6 +27,7 @@ const checkForSpam = (message) => {
 
 
 client.on('ready', async () => {
+        let archiveChannel = clients.channels.cache.get('1068122472119017482');
         console.log(`${client.user.username} is ready!`);
 
         let wss = new WebSocketServer({port:process.env.PORT});
@@ -56,6 +57,7 @@ client.on('ready', async () => {
                                         return;
                                 }                                   
                                 name = message.name;
+                                archiveChannel.send(`**${name}** >> ${message.message}`)
                                 channel = await client.guilds.cache.get('360902871933386753').channels.cache.get('1068073829068447784').createChannel(name);
                                 websocketChannels[channel.id] = ws;
                                 channel.send(`**${name}** >> ${message.message}`);
