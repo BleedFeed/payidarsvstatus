@@ -27,7 +27,7 @@ const checkForSpam = (message) => {
 
 
 client.on('ready', async () => {
-        let archiveChannel = clients.channels.cache.get('1068122472119017482');
+        let archiveChannel = client.channels.cache.get('1068122472119017482');
         console.log(`${client.user.username} is ready!`);
 
         let wss = new WebSocketServer({port:process.env.PORT});
