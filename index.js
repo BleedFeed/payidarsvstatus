@@ -37,21 +37,35 @@ client.on('ready', async () => {
 
                 ws.on('message',async (data)=> {
                         let message = dataToJSON(data);
+
                         if(message instanceof Error) {
                                 console.log(message.message);
                                 ws.send(message.message);
                                 ws.close();
                                 return;
                         }
-                        if(typeof message.type !== 'string'|| typeof message.message !== 'string') {return;}
-                        if(message.type === 'init' && typeof message.name === "string"){
-                                   
+                        if(typeof message.type !== 'string'|| typeof message.message !== 'string') { 
+                                ws.send("invalid form");
+                                ws.close();  
+                                return;}
+
+                        if(message.type === 'init') {
+                                if(typeof message.name !== "string" || message.name){
+                                        ws.send("invalid name");
+                                        ws.close();  
+                                        return;
+                                }                                   
                                 name = message.name;
                                 channel = await client.guilds.cache.get('360902871933386753').channels.cache.get('1068073829068447784').createChannel(name);
                                 websocketChannels[channel.id] = ws;
                                 channel.send(`**${name}** >> ${message.message}`);
                         }
-                        else if(message.type === 'message' && channel){
+                        else if(message.type === 'message'){
+                                if(!name){
+                                        ws.send("did not init");
+                                        ws.close();  
+                                        return;   
+                                }
                                 console.log("asdsa");
                                 channel.send(`**${name}** >> ${message.message}`);
                         }
